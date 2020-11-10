@@ -22,4 +22,9 @@
   width: 40px;
   height: 40px;
   background-color: pink;
+  cursor: pointer;
+}
+
+.cube:hover {
+  border: 1px solid red;
 }

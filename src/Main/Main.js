@@ -13,13 +13,16 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    this.setState((prevState) => ({...prevState, cubes: this.initCubes()}));
+    const cubes = this.initCubes();
+    this.setState((prevState) => ({...prevState, cubes}));
   }
 
-  initCubes(amountCubes = 10) {
+  initCubes(amountCubes = 6) {
     let cubes = [];
     for (let i = 0; i < amountCubes; i++) {
-      cubes.push(this.getCube(i));
+      const colorCube = this.getColorStyle();
+
+      cubes.push({colorCube, cube: this.getCube(colorCube)});
     }
     return cubes;
   }
@@ -31,20 +34,29 @@ class Main extends React.Component {
     };
   }
 
-  getCube(index) {
+  getCube(color) {
     const {width, height} = this.getPlaygroundSizes();
     const cubeStyles = {
-      left: Math.random() * width,
-      top: Math.random() * height
+      left: this.getRandom(width),
+      top: this.getRandom(height),
+      backgroundColor: `#${color}`
     };
-    return <div key={index} className="cube" style={cubeStyles}></div>;
+    return <div key={color} className="cube" style={cubeStyles}></div>;
+  }
+
+  getColorStyle() {
+    return this.getRandom(1000000);
+  }
+
+  getRandom(value) {
+    return Math.round(Math.random() * value);
   }
 
   render() {
     return (
       <div className="main">
-        <div className="main__playground" ref={this.playground} onClick={(e) => console.log(e.target.className)}>
-          {this.state.cubes}
+        <div className="main__playground" ref={this.playground}>
+          {this.state.cubes.map((cube) => cube.cube)}
         </div>
         <div className="main__results">
           <h2>Result</h2>
