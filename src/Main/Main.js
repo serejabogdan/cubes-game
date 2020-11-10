@@ -13,11 +13,11 @@ class Main extends React.Component {
   }
 
   componentDidMount() {
-    const cubes = this.initCubes();
+    const cubes = this.generateCubes();
     this.setState((prevState) => ({...prevState, cubes}));
   }
 
-  initCubes(amountCubes = 6) {
+  generateCubes(amountCubes = 6) {
     let cubes = [];
     for (let i = 0; i < amountCubes; i++) {
       const colorCube = this.getColorStyle();
@@ -41,7 +41,17 @@ class Main extends React.Component {
       top: this.getRandom(height),
       backgroundColor: `#${color}`
     };
-    return <div key={color} className="cube" style={cubeStyles} onClick={() => this.onDeleteCube(color)}></div>;
+    return (
+      <div
+        key={color}
+        className="cube"
+        style={cubeStyles}
+        onClick={() => {
+          this.onDeleteCube(color);
+          this.generateNewCubes();
+        }}
+      ></div>
+    );
   }
 
   onDeleteCube(color) {
@@ -49,11 +59,29 @@ class Main extends React.Component {
   }
 
   getColorStyle() {
-    return this.getRandom(1000000);
+    const sixDigitNumber = 1000000;
+    return this.getRandom(sixDigitNumber);
   }
 
   getRandom(value) {
     return Math.round(Math.random() * value);
+  }
+
+  getAmountNewCubes(minCubes = 1, maxCubes = 3) {
+    return Math.floor(Math.random() * maxCubes + minCubes);
+  }
+
+  generateNewCubes() {
+    const amountCubes = this.state.cubes.length;
+    const isEnoughCubes = amountCubes > 3;
+    if (isEnoughCubes) {
+      return;
+    }
+
+    const amountNewCubes = this.getAmountNewCubes(1, 3);
+
+    const newCubes = this.generateCubes(amountNewCubes);
+    this.setState((prevState) => ({...prevState, cubes: newCubes.concat(prevState.cubes)}));
   }
 
   render() {
