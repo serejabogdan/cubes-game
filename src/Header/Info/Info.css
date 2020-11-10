@@ -1,0 +1,6 @@
+.info {
+  display: flex;
+}
+.info__points {
+  margin-right: 2rem;
+}
