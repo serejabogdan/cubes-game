@@ -41,7 +41,11 @@ class Main extends React.Component {
       top: this.getRandom(height),
       backgroundColor: `#${color}`
     };
-    return <div key={color} className="cube" style={cubeStyles}></div>;
+    return <div key={color} className="cube" style={cubeStyles} onClick={() => this.onDeleteCube(color)}></div>;
+  }
+
+  onDeleteCube(color) {
+    this.setState((prevState) => ({...prevState, cubes: prevState.cubes.filter((cube) => cube.colorCube !== color)}));
   }
 
   getColorStyle() {
