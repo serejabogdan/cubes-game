@@ -8,9 +8,18 @@
   height: 100%;
   border: 1px solid black;
   border-top: 0;
+  position: relative;
+  overflow: hidden;
 }
 
 .main__results {
   width: auto;
   height: 100%;
+}
+
+.cube {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: pink;
 }
