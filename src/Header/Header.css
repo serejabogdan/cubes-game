@@ -1,0 +1,22 @@
+.header {
+  border-bottom: 1px solid gray;
+}
+
+.header__game-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.header__buttons {
+  margin-bottom: 1rem;
+}
+
+.header__game-info {
+  display: flex;
+}
+
+.info__points,
+.buttons-start {
+  margin-right: 2rem;
+}
