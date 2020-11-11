@@ -4,13 +4,33 @@ import {gameStatus, gameReset, timeLeft, modalOpenStatus, changeMainContent} fro
 import './Header.css';
 
 class Header extends React.Component {
+  constructor() {
+    super();
+    this.state = {isNewGame: false};
+  }
+
   onStartGame() {
     this.props.gameStatus({isGameStarted: true});
     this.timeLeft();
   }
 
+  onNewGame() {
+    const gameReset = {
+      points: 0,
+      time: 60
+    };
+    this.props.gameReset(gameReset);
+    this.setState({isNewGame: true});
+  }
+
   timeLeft() {
-    if (!this.props.time) {
+    const {isNewGame} = this.state;
+    if (isNewGame) {
+      this.setState({isNewGame: false});
+      return this.timeLeft();
+    }
+    const isGameEnd = !this.props.time;
+    if (isGameEnd) {
       return this.timeIsUp();
     }
     const oneSecond = 1000;
@@ -34,7 +54,7 @@ class Header extends React.Component {
   gameStartButtons() {
     if (!this.props.mainContent) return;
     return this.props.isGameStarted ? (
-      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onStartGame()}>
+      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onNewGame()}>
         New game
       </button>
     ) : (
