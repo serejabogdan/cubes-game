@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {gameReset} from '../redux/actions';
+import {getLocalStorage, setLocalStorage} from '../utils';
 import './Modal.css';
 
 const Modal = (props) => {
@@ -13,18 +14,11 @@ const Modal = (props) => {
 
   const onSavePlayer = () => {
     // TODO: bug fix repetitions
-    const prevLocalStorage = localStorageGet('players') || [];
+    const prevLocalStorage = getLocalStorage('players') || [];
     const player = {nickname: state.nickname, points: props.points};
     prevLocalStorage.push(player);
-    localStorageSave('players', prevLocalStorage);
+    setLocalStorage('players', prevLocalStorage);
     onModalClose();
-  };
-
-  const localStorageSave = (key, player) => {
-    localStorage.setItem(key, JSON.stringify(player));
-  };
-  const localStorageGet = (key) => {
-    return JSON.parse(localStorage.getItem(key));
   };
 
   const onModalClose = () => {
