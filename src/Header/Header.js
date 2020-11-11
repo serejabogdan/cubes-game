@@ -32,8 +32,9 @@ class Header extends React.Component {
   }
 
   gameStartButtons() {
+    if (!this.props.mainContent) return;
     return this.props.isGameStarted ? (
-      <button type="button" className="buttons-new-game btn btn-primary">
+      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onStartGame()}>
         New game
       </button>
     ) : (
