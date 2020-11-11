@@ -1,17 +1,29 @@
-import {START_GAME} from './types';
-import {POINT_INCREASE} from './types';
+import {GAME_STATUS, POINT_INCREASE, GAME_RESET, TIME_LEFT} from './types';
 
-export function startGame(data) {
+export function gameStatus(data) {
   return {
-    type: START_GAME,
+    type: GAME_STATUS,
     data
   };
 }
 
 export function pointIncrease(data) {
-  console.log('Action', data);
   return {
     type: POINT_INCREASE,
+    data
+  };
+}
+
+export function timeLeft(data) {
+  return {
+    type: TIME_LEFT,
+    data
+  };
+}
+
+export function gameReset(data) {
+  return {
+    type: GAME_RESET,
     data
   };
 }

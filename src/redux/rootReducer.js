@@ -1,17 +1,21 @@
-import {POINT_INCREASE, START_GAME} from './types';
+import {POINT_INCREASE, GAME_STATUS, TIME_LEFT, GAME_RESET} from './types';
 
 const initialState = {
   isGameStarted: false,
-  points: 0
+  points: 0,
+  time: 5
 };
 
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case START_GAME:
-      return {...state, isGameStarted: action.data.isGameStarted};
+    case TIME_LEFT:
+      return {...state, time: action.data.time};
     case POINT_INCREASE:
-      console.log(action.data.points);
       return {...state, points: action.data.points};
+    case GAME_STATUS:
+      return {...state, isGameStarted: action.data.isGameStarted};
+    case GAME_RESET:
+      return {...state, ...action.data};
     default:
       return state;
   }

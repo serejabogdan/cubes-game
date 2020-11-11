@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {pointIncrease} from '../redux/actions';
+import {pointIncrease, gameStatus} from '../redux/actions';
 import './Main.css';
 
 class Main extends React.Component {
@@ -56,7 +56,6 @@ class Main extends React.Component {
       ></div>
     );
   }
-
   scoreСalculation() {
     this.props.pointIncrease({points: this.props.points + 1});
   }
@@ -107,14 +106,14 @@ class Main extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     ...state
   };
 };
 
 const mapDispatchToState = {
-  pointIncrease
+  pointIncrease,
+  gameStatus
 };
 
 export default connect(mapStateToProps, mapDispatchToState)(Main);
