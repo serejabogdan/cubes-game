@@ -1,5 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {pointIncrease} from '../redux/actions';
 import './Main.css';
 
 class Main extends React.Component {
@@ -50,9 +51,14 @@ class Main extends React.Component {
         onClick={() => {
           this.onDeleteCube(color);
           this.generateNewCubes();
+          this.scoreСalculation();
         }}
       ></div>
     );
+  }
+
+  scoreСalculation() {
+    this.props.pointIncrease({points: this.props.points + 1});
   }
 
   onDeleteCube(color) {
@@ -107,4 +113,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, null)(Main);
+const mapDispatchToState = {
+  pointIncrease
+};
+
+export default connect(mapStateToProps, mapDispatchToState)(Main);
