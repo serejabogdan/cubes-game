@@ -17,7 +17,7 @@ const Modal = (props) => {
     const player = {nickname: state.nickname, points: props.points};
     prevLocalStorage.push(player);
     localStorageSave('players', prevLocalStorage);
-    props.gameReset({points: 0, isModalOpen: false});
+    onModalClose();
   };
 
   const localStorageSave = (key, player) => {
@@ -25,6 +25,10 @@ const Modal = (props) => {
   };
   const localStorageGet = (key) => {
     return JSON.parse(localStorage.getItem(key));
+  };
+
+  const onModalClose = () => {
+    props.gameReset({points: 0, isModalOpen: false});
   };
 
   return (
@@ -35,7 +39,7 @@ const Modal = (props) => {
             <h5 className="modal-title" id="exampleModalCenteredLabel">
               Player
             </h5>
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={onModalClose}>
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -55,7 +59,7 @@ const Modal = (props) => {
             </form>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-dismiss="modal">
+            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={onModalClose}>
               Close
             </button>
             <button type="button" className="btn btn-primary" onClick={onSavePlayer}>
