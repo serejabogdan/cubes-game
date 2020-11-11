@@ -1,11 +1,14 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {startGame} from '../../redux/actions';
 import './Buttons.css';
 
-const Buttons = () => {
+const Buttons = (props) => {
   const buttons = [
     {
       name: 'Start',
-      className: 'buttons-start btn btn-success'
+      className: 'buttons-start btn btn-success',
+      onclick: () => props.startGame({isGameStarted: true})
     },
     {
       name: 'New game',
@@ -14,8 +17,8 @@ const Buttons = () => {
   ];
   return (
     <div className="buttons">
-      {buttons.map(({name, className}) => (
-        <button key={name} type="button" className={className}>
+      {buttons.map(({name, className, onclick}) => (
+        <button key={name} type="button" className={className} onClick={onclick}>
           {name}
         </button>
       ))}
@@ -23,4 +26,8 @@ const Buttons = () => {
   );
 };
 
-export default Buttons;
+const mapDispatchToProps = {
+  startGame
+};
+
+export default connect(null, mapDispatchToProps)(Buttons);

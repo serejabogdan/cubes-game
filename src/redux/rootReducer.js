@@ -1,5 +1,15 @@
-const initialState = {};
+import {START_GAME} from './types';
+
+const initialState = {
+  isGameStarted: false
+};
 
 export const rootReducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case START_GAME:
+      console.log(action.data.isGameStarted);
+      return {...state, isGameStarted: action.data.isGameStarted};
+    default:
+      return state;
+  }
 };

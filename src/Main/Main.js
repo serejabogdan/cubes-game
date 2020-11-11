@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import './Main.css';
 
 class Main extends React.Component {
@@ -88,7 +89,7 @@ class Main extends React.Component {
     return (
       <div className="main">
         <div className="main__playground" ref={this.playground}>
-          {this.state.cubes.map((cube) => cube.cube)}
+          {this.props.isGameStarted && this.state.cubes.map((cube) => cube.cube)}
         </div>
         <div className="main__results">
           <h2>Result</h2>
@@ -99,4 +100,11 @@ class Main extends React.Component {
   }
 }
 
-export default Main;
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    ...state
+  };
+};
+
+export default connect(mapStateToProps, null)(Main);
