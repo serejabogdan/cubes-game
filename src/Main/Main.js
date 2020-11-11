@@ -1,17 +1,17 @@
 import React from 'react';
 import Playground from './Playground/Playground';
+import ResultTable from './ResultTable/ResultTable';
 import './Main.css';
+import {connect} from 'react-redux';
 
-const Main = () => {
-  return (
-    <div className="main">
-      <Playground />
-      <div className="main__results">
-        <h2>Result</h2>
-        <h2>Table</h2>
-      </div>
-    </div>
-  );
+const Main = (props) => {
+  return <div className="main">{props.mainContent ? <Playground /> : <ResultTable />}</div>;
 };
 
-export default Main;
+const mapStateToProps = (state) => {
+  return {
+    mainContent: state.mainContent
+  };
+};
+
+export default connect(mapStateToProps)(Main);

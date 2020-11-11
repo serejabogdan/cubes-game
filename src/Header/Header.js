@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {gameStatus, gameReset, timeLeft, modalOpenStatus} from '../redux/actions';
+import {gameStatus, gameReset, timeLeft, modalOpenStatus, changeMainContent} from '../redux/actions';
 import './Header.css';
 
 class Header extends React.Component {
@@ -31,7 +31,7 @@ class Header extends React.Component {
     return this.timeLeft();
   }
 
-  isGameStarted() {
+  gameStartButtons() {
     return this.props.isGameStarted ? (
       <button type="button" className="buttons-new-game btn btn-primary">
         New game
@@ -39,6 +39,23 @@ class Header extends React.Component {
     ) : (
       <button type="button" className="buttons-start btn btn-success" onClick={() => this.onStartGame()}>
         Start
+      </button>
+    );
+  }
+
+  onMainContent(value) {
+    this.props.changeMainContent({mainContent: value});
+  }
+
+  gameOrResults() {
+    if (this.props.isGameStarted) return;
+    return this.props.mainContent ? (
+      <button type="button" className="buttons-start btn btn-success" onClick={() => this.onMainContent(false)}>
+        Results
+      </button>
+    ) : (
+      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onMainContent(true)}>
+        Game
       </button>
     );
   }
@@ -53,7 +70,10 @@ class Header extends React.Component {
       <div className="header">
         <h1>Cubes game</h1>
         <div className="header__game-control">
-          <div className="header__buttons buttons">{this.isGameStarted()}</div>
+          <div className="header__buttons buttons">
+            {this.gameStartButtons()}
+            {this.gameOrResults()}
+          </div>
           <div className="header__game-info info">
             <div className="info__points">
               <span>Points</span>
@@ -73,7 +93,8 @@ const mapDispatchToProps = {
   gameStatus,
   gameReset,
   timeLeft,
-  modalOpenStatus
+  modalOpenStatus,
+  changeMainContent
 };
 
 const mapStateToProps = (state) => {
