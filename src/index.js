@@ -9,9 +9,11 @@ import {rootReducer} from './redux/rootReducer';
 const store = createStore(rootReducer);
 
 const app = (
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
 );
 
-ReactDOM.render(<React.StrictMode>app</React.StrictMode>, document.getElementById('root'));
+ReactDOM.render(app, document.getElementById('root'));
