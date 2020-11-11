@@ -19,7 +19,7 @@ class Header extends React.Component {
 
   timeIsUp() {
     const gameReset = {
-      timeLeft: 5,
+      time: 5,
       isGameStarted: false
     };
     this.props.gameReset(gameReset);
