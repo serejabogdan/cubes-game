@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cubes-game/static/css/main.12bee5ac.chunk.css",
-    "main.js": "/cubes-game/static/js/main.9c03ed26.chunk.js",
-    "main.js.map": "/cubes-game/static/js/main.9c03ed26.chunk.js.map",
+    "main.js": "/cubes-game/static/js/main.3dc5b0c7.chunk.js",
+    "main.js.map": "/cubes-game/static/js/main.3dc5b0c7.chunk.js.map",
     "runtime-main.js": "/cubes-game/static/js/runtime-main.2ed16c5d.js",
     "runtime-main.js.map": "/cubes-game/static/js/runtime-main.2ed16c5d.js.map",
     "static/js/2.c50776b5.chunk.js": "/cubes-game/static/js/2.c50776b5.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.2ed16c5d.js",
     "static/js/2.c50776b5.chunk.js",
     "static/css/main.12bee5ac.chunk.css",
-    "static/js/main.9c03ed26.chunk.js"
+    "static/js/main.3dc5b0c7.chunk.js"
   ]
 }
