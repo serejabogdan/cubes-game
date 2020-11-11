@@ -18,8 +18,8 @@ class Header extends React.Component {
       this.props.gameReset(gameReset);
       return;
     }
-    const timeToFinish = 1000;
-    setTimeout(() => this.tick(), timeToFinish);
+    const oneSecond = 1000;
+    setTimeout(() => this.tick(), oneSecond);
   }
 
   tick() {

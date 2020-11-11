@@ -1,4 +1,4 @@
-import {GAME_STATUS, POINT_INCREASE, GAME_RESET, TIME_LEFT} from './types';
+import {GAME_STATUS, POINT_INCREASE, GAME_RESET, TIME_LEFT, GAME_PLAYER} from './types';
 
 export function gameStatus(data) {
   return {
@@ -24,6 +24,13 @@ export function timeLeft(data) {
 export function gameReset(data) {
   return {
     type: GAME_RESET,
+    data
+  };
+}
+
+export function gamePlayer(data) {
+  return {
+    type: GAME_PLAYER,
     data
   };
 }
