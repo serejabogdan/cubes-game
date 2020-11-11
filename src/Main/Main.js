@@ -89,7 +89,7 @@ class Main extends React.Component {
     const newCubes = this.generateCubes(amountNewCubes);
     this.setState((prevState) => ({...prevState, cubes: newCubes.concat(prevState.cubes)}));
   }
-
+  // TODO: decompose MAIN
   render() {
     return (
       <div className="main">

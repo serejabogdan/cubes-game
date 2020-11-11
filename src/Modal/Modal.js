@@ -17,7 +17,7 @@ const Modal = (props) => {
     const player = {nickname: state.nickname, points: props.points};
     prevLocalStorage.push(player);
     localStorageSave('players', prevLocalStorage);
-    props.gameReset({points: 0});
+    props.gameReset({points: 0, isModalOpen: false});
   };
 
   const localStorageSave = (key, player) => {

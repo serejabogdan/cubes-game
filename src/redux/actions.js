@@ -1,4 +1,4 @@
-import {GAME_STATUS, POINT_INCREASE, GAME_RESET, TIME_LEFT, GAME_PLAYER} from './types';
+import {GAME_STATUS, POINT_INCREASE, GAME_RESET, TIME_LEFT, GAME_PLAYER, MODAL_OPEN_STATUS} from './types';
 
 export function gameStatus(data) {
   return {
@@ -31,6 +31,13 @@ export function gameReset(data) {
 export function gamePlayer(data) {
   return {
     type: GAME_PLAYER,
+    data
+  };
+}
+
+export function modalOpenStatus(data) {
+  return {
+    type: MODAL_OPEN_STATUS,
     data
   };
 }

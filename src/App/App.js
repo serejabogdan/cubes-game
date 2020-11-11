@@ -3,15 +3,23 @@ import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Modal from '../Modal/Modal';
+import {connect} from 'react-redux';
 
-function App() {
+function App(props) {
+  console.log(props.isModalOpen);
   return (
     <div className="App container">
-      <Modal />
+      {props.isModalOpen && <Modal />}
       <Header />
       <Main />
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isModalOpen: state.isModalOpen
+  };
+};
+
+export default connect(mapStateToProps, null)(App);

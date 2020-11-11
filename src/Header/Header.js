@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {gameStatus, gameReset, timeLeft} from '../redux/actions';
+import {gameStatus, gameReset, timeLeft, modalOpenStatus} from '../redux/actions';
 import './Header.css';
 
 class Header extends React.Component {
@@ -11,15 +11,19 @@ class Header extends React.Component {
 
   timeLeft() {
     if (!this.props.time) {
-      const gameReset = {
-        timeLeft: 5,
-        isGameStarted: false
-      };
-      this.props.gameReset(gameReset);
-      return;
+      return this.timeIsUp();
     }
     const oneSecond = 1000;
     setTimeout(() => this.tick(), oneSecond);
+  }
+
+  timeIsUp() {
+    const gameReset = {
+      timeLeft: 5,
+      isGameStarted: false
+    };
+    this.props.gameReset(gameReset);
+    this.props.modalOpenStatus({isModalOpen: true});
   }
 
   tick() {
@@ -68,7 +72,8 @@ class Header extends React.Component {
 const mapDispatchToProps = {
   gameStatus,
   gameReset,
-  timeLeft
+  timeLeft,
+  modalOpenStatus
 };
 
 const mapStateToProps = (state) => {
