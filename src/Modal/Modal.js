@@ -13,7 +13,6 @@ class Modal extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.player);
     this.setState({nickname: this.props.player});
   }
 
@@ -24,7 +23,6 @@ class Modal extends React.Component {
 
   onSavePlayer = () => {
     this.props.gamePlayer({player: this.state.nickname});
-    // TODO: bug fix repetitions
     const prevLocalStorage = getLocalStorage('players') || [];
     const player = {nickname: this.state.nickname, points: this.props.points};
     prevLocalStorage.push(player);

@@ -6,7 +6,6 @@ import Modal from '../Modal/Modal';
 import {connect} from 'react-redux';
 
 function App(props) {
-  console.log(props.isModalOpen);
   return (
     <div className="App container">
       {props.isModalOpen && <Modal />}
