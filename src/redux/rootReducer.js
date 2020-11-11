@@ -11,7 +11,7 @@ import {
 const initialState = {
   isGameStarted: false,
   points: 0,
-  time: 5,
+  time: 60,
   player: '',
   isModalOpen: false,
   mainContent: true
