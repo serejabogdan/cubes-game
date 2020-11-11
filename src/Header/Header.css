@@ -1,5 +1,6 @@
 .header {
   border-bottom: 1px solid gray;
+  padding-bottom: 1rem;
 }
 
 .header__game-control {
@@ -8,15 +9,18 @@
   align-items: flex-end;
 }
 
-.header__buttons {
-  margin-bottom: 1rem;
-}
-
 .header__game-info {
   display: flex;
 }
 
 .info__points,
-.buttons-start {
+.btn {
   margin-right: 2rem;
+}
+
+.info__output {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
 }

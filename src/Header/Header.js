@@ -1,32 +1,127 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {gameStatus, gameReset, timeLeft, modalOpenStatus, changeMainContent} from '../redux/actions';
 import './Header.css';
 
-const Header = () => {
-  return (
-    <div class="header">
-      <h1>Cubes game</h1>
-      <div class="header__game-control">
-        <div class="header__buttons buttons">
-          <button type="button" class="buttons-start btn btn-success">
-            Start
-          </button>
-          <button type="button" class="buttons-new-game btn btn-primary">
-            New game
-          </button>
-        </div>
-        <div class="header__game-info info">
-          <div class="info__points form-group">
-            <label for="points">Points</label>
-            <input type="text" class="form-control" id="points" placeholder="47" />
+class Header extends React.Component {
+  constructor() {
+    super();
+    this.state = {isNewGame: false};
+  }
+
+  onStartGame() {
+    this.props.gameStatus({isGameStarted: true});
+    this.timeLeft();
+  }
+
+  onNewGame() {
+    const gameReset = {
+      points: 0,
+      time: 60
+    };
+    this.props.gameReset(gameReset);
+    this.setState({isNewGame: true});
+  }
+
+  timeLeft() {
+    const {isNewGame} = this.state;
+    if (isNewGame) {
+      this.setState({isNewGame: false});
+      return this.timeLeft();
+    }
+    const isGameEnd = !this.props.time;
+    if (isGameEnd) {
+      return this.timeIsUp();
+    }
+    const oneSecond = 1000;
+    setTimeout(() => this.tick(), oneSecond);
+  }
+
+  timeIsUp() {
+    const gameReset = {
+      time: 60,
+      isGameStarted: false
+    };
+    this.props.gameReset(gameReset);
+    this.props.modalOpenStatus({isModalOpen: true});
+  }
+
+  tick() {
+    this.props.timeLeft({time: this.props.time - 1});
+    return this.timeLeft();
+  }
+
+  gameStartButtons() {
+    if (!this.props.mainContent) return;
+    return this.props.isGameStarted ? (
+      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onNewGame()}>
+        New game
+      </button>
+    ) : (
+      <button type="button" className="buttons-start btn btn-success" onClick={() => this.onStartGame()}>
+        Start
+      </button>
+    );
+  }
+
+  onMainContent(value) {
+    this.props.changeMainContent({mainContent: value});
+  }
+
+  gameOrResults() {
+    if (this.props.isGameStarted) return;
+    return this.props.mainContent ? (
+      <button type="button" className="buttons-start btn btn-success" onClick={() => this.onMainContent(false)}>
+        Results
+      </button>
+    ) : (
+      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onMainContent(true)}>
+        Game
+      </button>
+    );
+  }
+
+  timeLeftOutput() {
+    if (this.props.time > 59) return `01:00`;
+    return this.props.time < 10 ? `00:0${this.props.time}` : `00:${this.props.time}`;
+  }
+
+  render() {
+    return (
+      <div className="header">
+        <h1>Cubes game</h1>
+        <div className="header__game-control">
+          <div className="header__buttons buttons">
+            {this.gameStartButtons()}
+            {this.gameOrResults()}
           </div>
-          <div class="info__time form-group">
-            <label for="time">Time left</label>
-            <input type="text" class="form-control" id="time" placeholder="1:00" />
+          <div className="header__game-info info">
+            <div className="info__points">
+              <span>Points</span>
+              <div className="info__output form-control">{this.props.points}</div>
+            </div>
+            <div className="info__time">
+              <span>Time left</span>
+              <div className="info__output form-control">{this.timeLeftOutput()}</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
+}
+const mapDispatchToProps = {
+  gameStatus,
+  gameReset,
+  timeLeft,
+  modalOpenStatus,
+  changeMainContent
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    ...state
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
