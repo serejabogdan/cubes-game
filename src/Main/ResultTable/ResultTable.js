@@ -4,10 +4,10 @@ import './ResultTable.css';
 
 const ResultTable = () => {
   const formingTableRows = () => {
-    const players = getLocalStorage('players');
+    const players = getLocalStorage('players') || [];
     return players.map((player, index) => (
-      <tr>
-        <th scope="row">{index}</th>
+      <tr key={`${player.nickname}${player.points}`}>
+        <th scope="row">{index + 1}</th>
         <td>{player.nickname}</td>
         <td>{player.points}</td>
       </tr>
@@ -16,7 +16,7 @@ const ResultTable = () => {
   return (
     <div className="results">
       <h2>results</h2>
-      <table class="table table-bordered">
+      <table className="table table-bordered">
         <thead>
           <tr>
             <th>#</th>
