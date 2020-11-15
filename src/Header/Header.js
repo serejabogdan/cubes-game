@@ -1,12 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {gameStatus, gameReset, timeLeft, modalOpenStatus, changeMainContent} from '../redux/actions';
+import {gameStatus, gameReset, timeUpdate, modalOpenStatus, changeMainContent} from '../redux/actions';
 import './Header.css';
 
 class Header extends React.Component {
   constructor() {
     super();
-    this.state = {isGameStarted: false, isGamePaused: false};
     this.interval = null;
   }
   onStartGame() {
@@ -20,59 +19,55 @@ class Header extends React.Component {
   onNewGame() {
     const gameReset = {
       points: 0,
-      time: 60
+      timeLeft: 60
     };
     this.props.gameReset(gameReset);
   }
 
   onPause() {
-    this.props.gameStatus({isGamePaused: true});
+    this.props.gameStatus({isGameStarted: false, isGamePaused: true});
+    this.timerStop();
+  }
+
+  timerStop() {
     clearInterval(this.interval);
     this.interval = null;
   }
 
   tick() {
-    const timeIsUp = this.props.time < 0;
+    const timeIsUp = this.props.timeLeft <= 0;
     if (timeIsUp) {
       this.clear();
+      return;
     }
 
-    this.props.timeLeft({time: this.props.time - 1});
+    this.props.timeUpdate({timeLeft: this.props.timeLeft - 1});
   }
 
   clear() {
-    this.props.timeLeft({time: 60});
-    this.stop();
-  }
-
-  gamePauseButtons() {
-    if (!this.props.mainContent) return;
-    return this.props.isGamePaused ? (
-      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onStartGame()}>
-        Unpause
-      </button>
-    ) : (
-      <button type="button" className="buttons-start btn btn-success" onClick={() => this.onPause()}>
-        Pause
-      </button>
-    );
+    this.props.gameReset({isGameStarted: false, isGamePaused: false, timeLeft: 60, isModalOpen: true});
+    this.timerStop();
   }
 
   gameStartButtons() {
     if (!this.props.mainContent) return;
     return this.props.isGameStarted ? (
       <>
-        {this.gamePauseButtons()}
+        <button type="button" className="buttons-start btn btn-success" onClick={() => this.onPause()}>
+          Pause
+        </button>
         <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onNewGame()}>
           New game
         </button>
       </>
+    ) : this.props.isGamePaused ? (
+      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onStartGame()}>
+        Unpause
+      </button>
     ) : (
-      <>
-        <button type="button" className="buttons-start btn btn-success" onClick={() => this.onStartGame()}>
-          Start
-        </button>
-      </>
+      <button type="button" className="buttons-start btn btn-success" onClick={() => this.onStartGame()}>
+        Start
+      </button>
     );
   }
 
@@ -83,7 +78,7 @@ class Header extends React.Component {
   gameOrResults() {
     if (this.props.isGameStarted) return;
     return this.props.mainContent ? (
-      <button type="button" className="buttons-start btn btn-success" onClick={() => this.onMainContent(false)}>
+      <button type="button" className="'buttons-start btn btn-success" onClick={() => this.onMainContent(false)}>
         Results
       </button>
     ) : (
@@ -93,9 +88,9 @@ class Header extends React.Component {
     );
   }
 
-  timeLeftOutput() {
-    if (this.props.time > 59) return `01:00`;
-    return this.props.time < 10 ? `00:0${this.props.time}` : `00:${this.props.time}`;
+  timeUpdateOutput() {
+    if (this.props.timeLeft > 59) return `01:00`;
+    return this.props.timeLeft < 10 ? `00:0${this.props.timeLeft}` : `00:${this.props.timeLeft}`;
   }
 
   render() {
@@ -114,7 +109,7 @@ class Header extends React.Component {
             </div>
             <div className="info__time">
               <span>Time left</span>
-              <div className="info__output form-control">{this.timeLeftOutput()}</div>
+              <div className="info__output form-control">{this.timeUpdateOutput()}</div>
             </div>
           </div>
         </div>
@@ -125,7 +120,7 @@ class Header extends React.Component {
 const mapDispatchToProps = {
   gameStatus,
   gameReset,
-  timeLeft,
+  timeUpdate,
   modalOpenStatus,
   changeMainContent
 };

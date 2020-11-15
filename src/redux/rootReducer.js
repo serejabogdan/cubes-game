@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   isGameStarted: false,
+  isGamePaused: false,
   points: 0,
   timeLeft: 60,
   player: '',
@@ -20,7 +21,7 @@ const initialState = {
 export const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case TIME_UPDATE:
-      return {...state, time: action.data.time};
+      return {...state, timeLeft: action.data.timeLeft};
     case POINT_INCREASE:
       return {...state, points: action.data.points};
     case GAME_STATUS:
