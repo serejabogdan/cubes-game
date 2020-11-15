@@ -6,12 +6,15 @@ import './Header.css';
 class Header extends React.Component {
   constructor() {
     super();
-    this.state = {isNewGame: false};
+    this.state = {isGameStarted: false, isGamePaused: false};
+    this.interval = null;
   }
-
   onStartGame() {
-    this.props.gameStatus({isGameStarted: true});
-    this.timeLeft();
+    this.props.gameStatus({isGameStarted: true, isGamePaused: false});
+    const oneSecond = 1000;
+    if (!this.interval) {
+      this.interval = setInterval(() => this.tick(), oneSecond);
+    }
   }
 
   onNewGame() {
@@ -20,47 +23,56 @@ class Header extends React.Component {
       time: 60
     };
     this.props.gameReset(gameReset);
-    this.setState({isNewGame: true});
   }
 
-  timeLeft() {
-    const {isNewGame} = this.state;
-    if (isNewGame) {
-      this.setState({isNewGame: false});
-      return this.timeLeft();
-    }
-    const isGameEnd = !this.props.time;
-    if (isGameEnd) {
-      return this.timeIsUp();
-    }
-    const oneSecond = 1000;
-    setTimeout(() => this.tick(), oneSecond);
-  }
-
-  timeIsUp() {
-    const gameReset = {
-      time: 60,
-      isGameStarted: false
-    };
-    this.props.gameReset(gameReset);
-    this.props.modalOpenStatus({isModalOpen: true});
+  onPause() {
+    this.props.gameStatus({isGamePaused: true});
+    clearInterval(this.interval);
+    this.interval = null;
   }
 
   tick() {
+    const timeIsUp = this.props.time < 0;
+    if (timeIsUp) {
+      this.clear();
+    }
+
     this.props.timeLeft({time: this.props.time - 1});
-    return this.timeLeft();
+  }
+
+  clear() {
+    this.props.timeLeft({time: 60});
+    this.stop();
+  }
+
+  gamePauseButtons() {
+    if (!this.props.mainContent) return;
+    return this.props.isGamePaused ? (
+      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onStartGame()}>
+        Unpause
+      </button>
+    ) : (
+      <button type="button" className="buttons-start btn btn-success" onClick={() => this.onPause()}>
+        Pause
+      </button>
+    );
   }
 
   gameStartButtons() {
     if (!this.props.mainContent) return;
     return this.props.isGameStarted ? (
-      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onNewGame()}>
-        New game
-      </button>
+      <>
+        {this.gamePauseButtons()}
+        <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onNewGame()}>
+          New game
+        </button>
+      </>
     ) : (
-      <button type="button" className="buttons-start btn btn-success" onClick={() => this.onStartGame()}>
-        Start
-      </button>
+      <>
+        <button type="button" className="buttons-start btn btn-success" onClick={() => this.onStartGame()}>
+          Start
+        </button>
+      </>
     );
   }
 
