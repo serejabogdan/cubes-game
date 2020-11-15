@@ -1,6 +1,6 @@
 export const GAME_STATUS = 'GAME_STATUS';
 export const POINT_INCREASE = 'POINT_INCREASE';
-export const TIME_LEFT = 'TIME_LEFT';
+export const TIME_UPDATE = 'TIME_UPDATE';
 export const GAME_RESET = 'GAME_RESET';
 export const GAME_PLAYER = 'GAME_PLAYER';
 export const MODAL_OPEN_STATUS = 'MODAL_OPEN_STATUS';
