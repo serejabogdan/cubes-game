@@ -2,7 +2,7 @@ import {
   GAME_STATUS,
   POINT_INCREASE,
   GAME_RESET,
-  TIME_LEFT,
+  TIME_UPDATE,
   GAME_PLAYER,
   MODAL_OPEN_STATUS,
   CHANGE_MAIN_CONTENT
@@ -22,9 +22,9 @@ export function pointIncrease(data) {
   };
 }
 
-export function timeLeft(data) {
+export function timeUpdate(data) {
   return {
-    type: TIME_LEFT,
+    type: TIME_UPDATE,
     data
   };
 }
