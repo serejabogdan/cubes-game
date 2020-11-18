@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {gameStatus, gameReset, timeUpdate, modalOpenStatus, changeMainContent} from '../redux/actions';
+import ControlButtons from './ControlButtons/ControlButtons';
 import './Header.css';
 
 class Header extends React.Component {
@@ -49,43 +50,8 @@ class Header extends React.Component {
     this.timerStop();
   }
 
-  gameStartButtons() {
-    if (!this.props.mainContent) return;
-    return this.props.isGameStarted ? (
-      <>
-        <button type="button" className="buttons-start btn btn-success" onClick={() => this.onPause()}>
-          Pause
-        </button>
-        <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onNewGame()}>
-          New game
-        </button>
-      </>
-    ) : this.props.isGamePaused ? (
-      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onStartGame()}>
-        Unpause
-      </button>
-    ) : (
-      <button type="button" className="buttons-start btn btn-success" onClick={() => this.onStartGame()}>
-        Start
-      </button>
-    );
-  }
-
   onMainContent(value) {
     this.props.changeMainContent({mainContent: value});
-  }
-
-  gameOrResults() {
-    if (this.props.isGameStarted) return;
-    return this.props.mainContent ? (
-      <button type="button" className="'buttons-start btn btn-success" onClick={() => this.onMainContent(false)}>
-        Results
-      </button>
-    ) : (
-      <button type="button" className="buttons-new-game btn btn-primary" onClick={() => this.onMainContent(true)}>
-        Game
-      </button>
-    );
   }
 
   timeUpdateOutput() {
@@ -97,11 +63,16 @@ class Header extends React.Component {
     return (
       <div className="header">
         <h1>Cubes game</h1>
-        <div className="header__game-control">
-          <div className="header__buttons buttons">
-            {this.gameStartButtons()}
-            {this.gameOrResults()}
-          </div>
+        <div className="header__game-controls">
+          <ControlButtons
+            onStartGame={() => this.onStartGame()}
+            onNewGame={() => this.onNewGame()}
+            onPause={() => this.onPause()}
+            onMainContent={(value) => this.onMainContent(value)}
+            isMainContent={this.props.mainContent}
+            isGameStarted={this.props.isGameStarted}
+            isGamePaused={this.props.isGamePaused}
+          />
           <div className="header__game-info info">
             <div className="info__points">
               <span>Points</span>
