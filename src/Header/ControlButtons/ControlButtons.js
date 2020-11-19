@@ -26,7 +26,6 @@ function controlButtonsSwitch(props) {
   }
 }
 
-// TODO: fix start button in result
 const ControlButtons = (props) => {
   return <div className="control-buttons">{controlButtonsSwitch(props)}</div>;
 };
