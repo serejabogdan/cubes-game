@@ -10,7 +10,7 @@ class Header extends React.Component {
     this.interval = null;
   }
   onStartGame() {
-    this.props.gameStatus({isGameStarted: true, isGamePaused: false});
+    this.props.gameStatus({mainContent: true, isGameStarted: true, isGamePaused: false});
     const oneSecond = 1000;
     if (!this.interval) {
       this.interval = setInterval(() => this.tick(), oneSecond);
