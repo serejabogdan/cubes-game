@@ -1,7 +1,7 @@
 import React from 'react';
 import './Playground.css';
 import {connect} from 'react-redux';
-import {pointIncrease, gameStatus} from '../../redux/actions';
+import {pointIncrease} from '../../redux/actions';
 
 class Playground extends React.Component {
   constructor() {
@@ -21,11 +21,17 @@ class Playground extends React.Component {
   generateCubes(amountCubes = 6) {
     let cubes = [];
     for (let i = 0; i < amountCubes; i++) {
-      const colorCube = this.getColorStyle();
-
-      cubes.push({colorCube, cube: this.getCube(colorCube)});
+      const colorCube = this.getRgbColorStyle();
+      const cubeKey = this.getReactKey(colorCube);
+      cubes.push({cubeKey, cube: this.getCube(colorCube, cubeKey)});
     }
     return cubes;
+  }
+
+  getReactKey(colorCube) {
+    const colorCubeValues = Object.values(colorCube);
+    let colorCubeSum = colorCubeValues.reduce((previous, current) => previous + current, 0);
+    return (colorCubeSum += this.getRandom(colorCubeSum));
   }
 
   getPlaygroundSizes(cubeSize = 40) {
@@ -35,20 +41,20 @@ class Playground extends React.Component {
     };
   }
 
-  getCube(color) {
+  getCube({r, g, b}, cubeKey) {
     const {width, height} = this.getPlaygroundSizes();
     const cubeStyles = {
       left: this.getRandom(width),
       top: this.getRandom(height),
-      backgroundColor: `#${color}`
+      background: `rgb(${r}, ${g}, ${b})`
     };
     return (
       <div
-        key={color}
+        key={cubeKey}
         className="cube"
         style={cubeStyles}
         onClick={() => {
-          this.onDeleteCube(color);
+          this.onDeleteCube(cubeKey);
           this.generateNewCubes();
           this.scoreСalculation();
         }}
@@ -59,17 +65,25 @@ class Playground extends React.Component {
     this.props.pointIncrease({points: this.props.points + 1});
   }
 
-  onDeleteCube(color) {
-    this.setState((prevState) => ({...prevState, cubes: prevState.cubes.filter((cube) => cube.colorCube !== color)}));
+  onDeleteCube(cubeKey) {
+    this.setState((prevState) => ({
+      ...prevState,
+      cubes: prevState.cubes.filter((cube) => cube.cubeKey !== cubeKey)
+    }));
   }
 
-  getColorStyle() {
-    const sixDigitNumber = 1000000;
-    return this.getRandom(sixDigitNumber);
+  getRgbColorStyle() {
+    const rgbMax = 255;
+    const rgb = {
+      r: this.getRandom(rgbMax),
+      g: this.getRandom(rgbMax),
+      b: this.getRandom(rgbMax)
+    };
+    return rgb;
   }
 
   getRandom(value) {
-    return Math.round(Math.random() * value);
+    return Math.floor(Math.random() * value);
   }
 
   getAmountNewCubes(minCubes = 1, maxCubes = 3) {
@@ -100,13 +114,13 @@ class Playground extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    ...state
+    isGameStarted: state.isGameStarted,
+    points: state.points
   };
 };
 
 const mapDispatchToState = {
-  pointIncrease,
-  gameStatus
+  pointIncrease
 };
 
 export default connect(mapStateToProps, mapDispatchToState)(Playground);
