@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/cubes-game/static/css/main.12bee5ac.chunk.css",
-    "main.js": "/cubes-game/static/js/main.658c6bb2.chunk.js",
-    "main.js.map": "/cubes-game/static/js/main.658c6bb2.chunk.js.map",
+    "main.css": "/cubes-game/static/css/main.94bd47dc.chunk.css",
+    "main.js": "/cubes-game/static/js/main.1387b7aa.chunk.js",
+    "main.js.map": "/cubes-game/static/js/main.1387b7aa.chunk.js.map",
     "runtime-main.js": "/cubes-game/static/js/runtime-main.2ed16c5d.js",
     "runtime-main.js.map": "/cubes-game/static/js/runtime-main.2ed16c5d.js.map",
     "static/js/2.be7eec64.chunk.js": "/cubes-game/static/js/2.be7eec64.chunk.js",
     "static/js/2.be7eec64.chunk.js.map": "/cubes-game/static/js/2.be7eec64.chunk.js.map",
     "index.html": "/cubes-game/index.html",
-    "static/css/main.12bee5ac.chunk.css.map": "/cubes-game/static/css/main.12bee5ac.chunk.css.map",
+    "static/css/main.94bd47dc.chunk.css.map": "/cubes-game/static/css/main.94bd47dc.chunk.css.map",
     "static/js/2.be7eec64.chunk.js.LICENSE.txt": "/cubes-game/static/js/2.be7eec64.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.2ed16c5d.js",
     "static/js/2.be7eec64.chunk.js",
-    "static/css/main.12bee5ac.chunk.css",
-    "static/js/main.658c6bb2.chunk.js"
+    "static/css/main.94bd47dc.chunk.css",
+    "static/js/main.1387b7aa.chunk.js"
   ]
 }
