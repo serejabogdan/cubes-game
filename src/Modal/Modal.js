@@ -4,6 +4,8 @@ import {gameReset, gamePlayer} from '../redux/actions';
 import {getLocalStorage, setLocalStorage} from '../utils';
 import './Modal.css';
 
+import Button from '../Header/ControlButtons/Button/Button';
+
 class Modal extends React.Component {
   constructor() {
     super();
@@ -42,15 +44,9 @@ class Modal extends React.Component {
               <h5 className="modal-title" id="exampleModalCenteredLabel">
                 You got {this.props.points} points.
               </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-                onClick={this.onModalClose}
-              >
+              <Button className="close" onClick={() => this.onModalClose()}>
                 <span aria-hidden="true">&times;</span>
-              </button>
+              </Button>
             </div>
             <div className="modal-body">
               <form>
@@ -68,12 +64,10 @@ class Modal extends React.Component {
               </form>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.onModalClose}>
+              <Button className="btn btn-secondary" onClick={() => this.onModalClose()}>
                 Close
-              </button>
-              <button type="button" className="btn btn-primary" onClick={this.onSavePlayer}>
-                Save changes
-              </button>
+              </Button>
+              <Button onClick={() => this.onSavePlayer()}>Save changes</Button>
             </div>
           </div>
         </div>

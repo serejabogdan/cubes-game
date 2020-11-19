@@ -3,7 +3,7 @@
   padding-bottom: 1rem;
 }
 
-.header__game-control {
+.header__game-controls {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;

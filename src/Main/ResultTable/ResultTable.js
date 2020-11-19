@@ -7,7 +7,7 @@ const ResultTable = () => {
     const players = getLocalStorage('players') || [];
     players.sort((prev, next) => next.points - prev.points);
     return players.map((player, index) => (
-      <tr key={`${player.nickname}${player.points}`}>
+      <tr key={`${player.nickname}${index}`}>
         <th scope="row">{index + 1}</th>
         <td>{player.nickname}</td>
         <td>{player.points}</td>
