@@ -1,43 +1,32 @@
 import React from 'react';
+import Button from './Button/Button';
 import './ControlButtons.css';
 
 function controlButtonsSwitch(props) {
   if (props.isGamePaused) {
-    return (
-      <button type="button" className="buttons-new-game btn btn-primary" onClick={props.onStartGame}>
-        Unpause
-      </button>
-    );
+    return <Button onClick={props.onStartGame}>Unpause</Button>;
   } else if (props.isGameStarted) {
     return (
       <>
-        <button type="button" className="buttons-start btn btn-success" onClick={props.onPause}>
-          Pause
-        </button>
-        <button type="button" className="buttons-new-game btn btn-primary" onClick={props.onNewGame}>
-          New game
-        </button>
+        <Button onClick={props.onPause}>Pause</Button>
+        <Button onClick={props.onNewGame}>New game</Button>
       </>
     );
   } else if (!props.isGameStarted) {
     return (
       <>
-        <button type="button" className="buttons-start btn btn-success" onClick={props.onStartGame}>
-          Start
-        </button>
+        <Button onClick={props.onStartGame}>Start</Button>
         {props.isMainContent ? (
-          <button type="button" className="buttons-start btn btn-success" onClick={() => props.onMainContent(false)}>
-            Result
-          </button>
+          <Button onClick={() => props.onMainContent(false)}>Result</Button>
         ) : (
-          <button type="button" className="buttons-start btn btn-success" onClick={() => props.onMainContent(true)}>
-            Game
-          </button>
+          <Button onClick={() => props.onMainContent(true)}>Game</Button>
         )}
       </>
     );
   }
 }
+
+// TODO: fix start button in result
 const ControlButtons = (props) => {
   return <div className="control-buttons">{controlButtonsSwitch(props)}</div>;
 };
